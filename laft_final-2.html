@@ -200,6 +200,16 @@ nav.scrolled {
   .nav-cta { display: none; }
   .nav-burger { display: flex; }
   .nav-mobile { top: 60px; }
+
+  /* video doesn't autoplay on mobile via data: URIs — use gradient fallback */
+  .hero-video-wrap { display: none; }
+  .hero {
+    background:
+      radial-gradient(ellipse 90% 60% at 50% 100%, rgba(0,63,163,.18) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 40% at 15% 100%, rgba(218,2,96,.12) 0%, transparent 60%),
+      radial-gradient(ellipse 70% 50% at 85% 0%,   rgba(218,2,96,.07) 0%, transparent 60%),
+      #0a0a0a;
+  }
 }
 @media (max-width: 480px) {
   nav { padding: 0 16px; }
