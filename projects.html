@@ -211,17 +211,15 @@ nav.scrolled { background: rgba(10,10,10,.97); box-shadow: 0 4px 24px rgba(0,0,0
 
 .pc-logo-wrap {
   display: flex; align-items: center; justify-content: center;
-  width: 100%; height: 140px;
+  width: 100%; height: 200px;
   border-radius: 12px;
-  background: #fff;
-  border: 1px solid var(--border);
+  background: transparent;
   margin-bottom: 24px;
-  padding: 18px;
-  transition: border-color .35s, background .35s;
+  padding: 12px;
+  transition: transform .35s;
 }
-.pc:hover .pc-logo-wrap { border-color: var(--border-md); }
 .pc-logo-wrap img {
-  max-height: 100%; max-width: 85%;
+  max-height: 100%; max-width: 95%;
   object-fit: contain;
   transition: transform .3s;
 }
