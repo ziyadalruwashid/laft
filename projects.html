@@ -259,6 +259,36 @@ nav.scrolled { background: rgba(10,10,10,.97); box-shadow: 0 4px 24px rgba(0,0,0
 @keyframes cardIn { to { opacity: 1; transform: translateY(0); } }
 .pc.hidden { display: none; }
 
+/* pagination */
+.pagination {
+  display: flex; justify-content: center; align-items: center;
+  gap: 8px; margin-top: 56px;
+}
+.page-btn {
+  min-width: 40px; height: 40px; padding: 0 12px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-2);
+  border-radius: 10px;
+  font-family: var(--font); font-size: 14px; font-weight: 600;
+  cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center;
+  transition: border-color .25s, color .25s, background .25s, transform .25s;
+}
+.page-btn:hover:not(:disabled):not(.active) {
+  border-color: rgba(218,2,96,.5);
+  color: var(--pink);
+  background: rgba(218,2,96,.08);
+}
+.page-btn.active {
+  background: var(--pink);
+  border-color: var(--pink);
+  color: #fff;
+  box-shadow: 0 6px 20px rgba(218,2,96,.35);
+}
+.page-btn.arrow { font-size: 18px; }
+.page-btn:disabled { opacity: .35; cursor: not-allowed; }
+
 /* ─── FOOTER ─── */
 footer {
   background: #0d0d0d;
@@ -470,6 +500,8 @@ footer {
           <div class="pc-arrow">←</div>
         </a>
     </div>
+
+    <div class="pagination" id="pagination"></div>
   </div>
 </section>
 
@@ -550,21 +582,47 @@ footer {
   }
 })();
 
-// filter
-document.querySelectorAll('.pf-btn').forEach(function(btn){
-  btn.addEventListener('click', function(){
-    document.querySelectorAll('.pf-btn').forEach(function(b){ b.classList.remove('active'); });
-    btn.classList.add('active');
-    var filter = btn.dataset.filter;
-    document.querySelectorAll('.pc').forEach(function(card){
-      if (filter === 'الكل' || card.dataset.sector === filter) {
-        card.classList.remove('hidden');
-      } else {
-        card.classList.add('hidden');
-      }
+// pagination
+(function(){
+  var perPage = 6;
+  var cards = Array.from(document.querySelectorAll('.pc'));
+  var pageCount = Math.max(1, Math.ceil(cards.length / perPage));
+  var current = 1;
+  var pag = document.getElementById('pagination');
+
+  function render(){
+    cards.forEach(function(c, i){
+      var page = Math.floor(i / perPage) + 1;
+      c.classList.toggle('hidden', page !== current);
     });
-  });
-});
+    pag.innerHTML = '';
+    var prev = document.createElement('button');
+    prev.className = 'page-btn arrow';
+    prev.innerHTML = '→';
+    prev.disabled = current === 1;
+    prev.onclick = function(){ if(current > 1){ current--; render(); scroll(); } };
+    pag.appendChild(prev);
+    for (var i = 1; i <= pageCount; i++) {
+      (function(n){
+        var b = document.createElement('button');
+        b.className = 'page-btn' + (n === current ? ' active' : '');
+        b.textContent = n;
+        b.onclick = function(){ current = n; render(); scroll(); };
+        pag.appendChild(b);
+      })(i);
+    }
+    var next = document.createElement('button');
+    next.className = 'page-btn arrow';
+    next.innerHTML = '←';
+    next.disabled = current === pageCount;
+    next.onclick = function(){ if(current < pageCount){ current++; render(); scroll(); } };
+    pag.appendChild(next);
+  }
+  function scroll(){
+    document.querySelector('.projects-section').scrollIntoView({behavior:'smooth', block:'start'});
+  }
+  render();
+})();
 </script>
 </body>
 </html>
