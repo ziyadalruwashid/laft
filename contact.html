@@ -160,7 +160,27 @@ main {
   position: relative; z-index: 2;
   padding: 120px 0 80px;
   display: flex; align-items: center;
+  overflow: hidden;
 }
+main::before, main::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  pointer-events: none;
+  z-index: 0;
+}
+main::before {
+  width: 480px; height: 480px;
+  background: rgba(218, 2, 96, 0.12);
+  top: 10%; right: -120px;
+}
+main::after {
+  width: 520px; height: 520px;
+  background: rgba(0, 63, 163, 0.12);
+  bottom: 10%; left: -140px;
+}
+main .wrap { position: relative; z-index: 1; }
 .wrap { max-width: 1200px; margin: 0 auto; padding: 0 40px; width: 100%; }
 
 /* split */
