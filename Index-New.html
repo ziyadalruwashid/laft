@@ -1560,28 +1560,11 @@ footer {
 }
 
 /* ─── BLOG SECTION ──────────────────────── */
-.blog-reel-outer {
-  position: relative;
-  overflow: hidden;
-  padding: 24px 0 40px;
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
-  mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
-}
-.blog-reel {
-  display: flex;
-  gap: 28px;
-  width: max-content;
-  will-change: transform;
-  cursor: grab;
-  user-select: none;
-}
-.blog-reel:active { cursor: grabbing; }
-.reel-card {
-  flex: 0 0 360px !important;
-  width: 360px !important;
-  opacity: 1 !important;
-  transform: none !important;
-  animation: none !important;
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 0;
 }
 
 .blog-card {
@@ -2443,64 +2426,28 @@ footer {
 <!-- ══ BLOG ═════════════════════════════════════════════ -->
 <div class="divider" style="position:relative;z-index:2"></div>
 
-<section class="section-pad" id="blog" style="overflow:hidden">
+<section class="section-pad" id="blog">
   <div class="wrap">
     <div style="margin-bottom:56px">
       <div class="sh-tag r">المدونة</div>
       <h2 class="sh-title r d1" style="color:var(--pink)">أحدث التقارير والإصدارات الملفتة</h2>
     </div>
-  </div>
 
-  <!-- Infinite reel — full width, outside wrap -->
-  <div class="blog-reel-outer">
-    <div class="blog-reel" id="blogReel" dir="ltr">
-
-      <!-- Set 1 -->
-      <div class="blog-card reel-card">
+    <div class="blog-grid">
+      <div class="blog-card r">
         <div class="blog-img"><div class="blog-img-inner" style="background:none"><img src="images/img-png-05.png" style="width:100%;height:100%;object-fit:cover;display:block;" alt="الرياض تحتفي بالتاريخ"></div><span class="blog-badge">جديد</span></div>
         <div class="blog-body"><span class="blog-tag">تقرير</span><div class="blog-title">الرياض تحتفي بالتاريخ</div></div>
       </div>
-      <div class="blog-card reel-card">
+      <div class="blog-card r d1">
         <div class="blog-img"><div class="blog-img-inner" style="background:none"><img src="images/img-png-06.png" style="width:100%;height:100%;object-fit:cover;display:block;" alt="خمار المليحة"></div></div>
         <div class="blog-body"><span class="blog-tag">تقرير</span><div class="blog-title">خمار المليحة</div></div>
       </div>
-      <div class="blog-card reel-card">
+      <div class="blog-card r d2">
         <div class="blog-img"><div class="blog-img-inner" style="background:none"><img src="images/img-jpeg-02.jpeg" style="width:100%;height:100%;object-fit:cover;display:block;" alt="مأساة خودينكا"></div></div>
         <div class="blog-body"><span class="blog-tag">تقرير</span><div class="blog-title">مأساة خودينكا</div></div>
       </div>
-
-      <!-- Set 2 -->
-      <div class="blog-card reel-card" aria-hidden="true">
-        <div class="blog-img"><div class="blog-img-inner" style="background:none"><img src="images/img-png-05.png" style="width:100%;height:100%;object-fit:cover;display:block;" alt=""></div><span class="blog-badge">جديد</span></div>
-        <div class="blog-body"><span class="blog-tag">تقرير</span><div class="blog-title">الرياض تحتفي بالتاريخ</div></div>
-      </div>
-      <div class="blog-card reel-card" aria-hidden="true">
-        <div class="blog-img"><div class="blog-img-inner" style="background:none"><img src="images/img-png-06.png" style="width:100%;height:100%;object-fit:cover;display:block;" alt=""></div></div>
-        <div class="blog-body"><span class="blog-tag">تقرير</span><div class="blog-title">خمار المليحة</div></div>
-      </div>
-      <div class="blog-card reel-card" aria-hidden="true">
-        <div class="blog-img"><div class="blog-img-inner" style="background:none"><img src="images/img-jpeg-02.jpeg" style="width:100%;height:100%;object-fit:cover;display:block;" alt=""></div></div>
-        <div class="blog-body"><span class="blog-tag">تقرير</span><div class="blog-title">مأساة خودينكا</div></div>
-      </div>
-
-      <!-- Set 3 -->
-      <div class="blog-card reel-card" aria-hidden="true">
-        <div class="blog-img"><div class="blog-img-inner" style="background:none"><img src="images/img-png-05.png" style="width:100%;height:100%;object-fit:cover;display:block;" alt=""></div><span class="blog-badge">جديد</span></div>
-        <div class="blog-body"><span class="blog-tag">تقرير</span><div class="blog-title">الرياض تحتفي بالتاريخ</div></div>
-      </div>
-      <div class="blog-card reel-card" aria-hidden="true">
-        <div class="blog-img"><div class="blog-img-inner" style="background:none"><img src="images/img-png-06.png" style="width:100%;height:100%;object-fit:cover;display:block;" alt=""></div></div>
-        <div class="blog-body"><span class="blog-tag">تقرير</span><div class="blog-title">خمار المليحة</div></div>
-      </div>
-      <div class="blog-card reel-card" aria-hidden="true">
-        <div class="blog-img"><div class="blog-img-inner" style="background:none"><img src="images/img-jpeg-02.jpeg" style="width:100%;height:100%;object-fit:cover;display:block;" alt=""></div></div>
-        <div class="blog-body"><span class="blog-tag">تقرير</span><div class="blog-title">مأساة خودينكا</div></div>
-      </div>
-
     </div>
-  </div>
 
-  <div class="wrap">
     <div style="display:flex;justify-content:flex-end;margin-top:48px">
       <a href="https://mediumspringgreen-pony-838722.hostingersite.com/%d8%a7%d9%84%d8%aa%d9%82%d8%a7%d8%b1%d9%8a%d8%b1/" class="btn-pink r" style="display:inline-flex;align-items:center;justify-content:center;text-decoration:none;cursor:pointer;">عرض الكل</a>
     </div>
@@ -2835,93 +2782,5 @@ footer {
 })();
 </script>
 
-<!-- Infinite blog reel -->
-<script>
-(function(){
-  var reel = document.getElementById('blogReel');
-  if(!reel) return;
-
-  var CARD_W  = 360;
-  var GAP     = 28;
-  var SET     = 3;                        /* original cards per set */
-  var SETS    = 3;                        /* total sets in HTML */
-  var setW    = SET * (CARD_W + GAP);     /* width of one set */
-  var SPEED   = 0.8;                      /* px per frame auto-scroll */
-
-  var x        = 0;
-  var dragging = false;
-  var dragStart= 0;
-  var xStart   = 0;
-  var lastX    = 0;
-  var velocity = 0;
-  var raf;
-
-  function clamp(val) {
-    /* keep x in [-setW*2 .. 0] so we always have cards on screen */
-    val = val % (setW * (SETS - 1));
-    if(val > 0) val -= setW * (SETS - 1);
-    return val;
-  }
-
-  function tick() {
-    if(!dragging) {
-      x -= SPEED;
-      x = clamp(x);
-    }
-    reel.style.transform = 'translateX(' + x + 'px)';
-    raf = requestAnimationFrame(tick);
-  }
-  raf = requestAnimationFrame(tick);
-
-  /* ── Mouse drag ── */
-  reel.addEventListener('mousedown', function(e){
-    dragging = true;
-    dragStart = e.clientX;
-    xStart    = x;
-    lastX     = e.clientX;
-    velocity  = 0;
-    e.preventDefault();
-  });
-  document.addEventListener('mousemove', function(e){
-    if(!dragging) return;
-    velocity = e.clientX - lastX;
-    x = clamp(xStart + (e.clientX - dragStart));
-    lastX = e.clientX;
-  });
-  document.addEventListener('mouseup', function(){
-    if(!dragging) return;
-    dragging = false;
-    /* momentum */
-    var v = velocity;
-    var mom = setInterval(function(){
-      v *= 0.92;
-      x  = clamp(x + v);
-      if(Math.abs(v) < 0.3) clearInterval(mom);
-    }, 16);
-  });
-
-  /* ── Touch drag ── */
-  reel.addEventListener('touchstart', function(e){
-    dragging = true;
-    dragStart = e.touches[0].clientX;
-    xStart    = x;
-    lastX     = e.touches[0].clientX;
-    velocity  = 0;
-  }, {passive:true});
-  document.addEventListener('touchmove', function(e){
-    if(!dragging) return;
-    velocity = e.touches[0].clientX - lastX;
-    x = clamp(xStart + (e.touches[0].clientX - dragStart));
-    lastX = e.touches[0].clientX;
-  }, {passive:true});
-  document.addEventListener('touchend', function(){
-    dragging = false;
-  });
-
-  /* pause on hover */
-  reel.addEventListener('mouseenter', function(){ SPEED = 0; });
-  reel.addEventListener('mouseleave', function(){ SPEED = 0.8; });
-})();
-</script>
 </body>
 </html>
