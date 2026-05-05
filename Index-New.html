@@ -1937,9 +1937,66 @@ footer {
 @keyframes wSpinCW{to{transform:translate(-50%,-50%) rotate(360deg)}}
 @keyframes wSpinCCW{to{transform:translate(-50%,-50%) rotate(-360deg)}}
 @keyframes wCenterPop{0%{opacity:0;transform:translate(-50%,-50%) scale(.5)}100%{opacity:1;transform:translate(-50%,-50%) scale(1)}}
+
+/* ── PRELOADER ──────────────────────────────────── */
+#preloader {
+  position: fixed; inset: 0; z-index: 9999;
+  background: #0a0a0a;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  transition: opacity .6s cubic-bezier(.16,1,.3,1), visibility .6s;
+}
+#preloader.done { opacity: 0; visibility: hidden; }
+#preloader.done #pl-logo { transform: scale(1.06); opacity: 0; }
+
+#pl-logo {
+  width: 140px; height: auto;
+  color: #fff;
+  opacity: 0;
+  transform: scale(.82);
+  transition: transform .8s cubic-bezier(.16,1,.3,1), opacity .7s ease;
+}
+#pl-logo.show { opacity: 1; transform: scale(1); }
+
+#pl-bar-wrap {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 2px; background: rgba(255,255,255,.06);
+}
+#pl-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #da0260, #003fa3);
+  box-shadow: 0 0 12px rgba(218,2,96,.6);
+  transition: width .35s cubic-bezier(.16,1,.3,1);
+}
+
+#pl-pct {
+  margin-top: 28px;
+  font-family: 'AbarLow', sans-serif;
+  font-size: 13px;
+  letter-spacing: 3px;
+  color: rgba(255,255,255,.3);
+  transition: color .3s;
+}
 </style>
 </head>
 <body>
+
+<!-- PRELOADER -->
+<div id="preloader">
+  <svg id="pl-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 992.03 756.61">
+    <path d="M70.55,186.66l377.25-.06v97.82h70.55v-97.82c0-38.93-31.56-70.49-70.49-70.49H69.02C30.9,116.11,0,147.01,0,185.13v170.41h70.55v-168.88Z" fill="currentColor"/>
+    <path d="M921.48.03v284.93h-127.79v-27.67l.7-21.42.02-1.15c0-31.66-12.33-61.4-34.66-83.69-23.04-23.08-53.83-35.39-86.38-34.68-63.79,1.4-115.69,55.16-115.79,119.88l-1.2,119.32,166.76-51.13v51.09h199.87c38.05,0,69.02-30.96,69.02-69.02V.03h-70.55ZM627.89,259.82l.23-23.06v-.36c0-26.75,20.99-48.97,46.79-49.54.36,0,.73-.01,1.09-.01,12.8,0,24.77,4.95,33.85,14.05,8.02,8,12.84,18.37,13.82,29.55l-95.78,29.36Z" fill="currentColor"/>
+    <path d="M343.43,434.5c-65.29,0-118.41,53.12-118.41,118.41v203.69h70.55v-87.8l95.73-29.35v117.15h70.55v-203.69c0-65.29-53.12-118.41-118.41-118.41ZM295.57,595.02v-42.1c0-26.39,21.47-47.86,47.86-47.86s47.87,21.47,47.87,47.86v12.75l-95.73,29.35Z" fill="currentColor"/>
+    <path d="M619.22,432.89c-62.83,0-114.36,49.19-118.16,111.07h-.25v212.65h70.55v-90.5h91.86v-70.55h-91.86v-44.26c0-26.39,21.47-47.86,47.87-47.86s47.86,21.47,47.86,47.86h70.55c0-65.29-53.12-118.41-118.41-118.41Z" fill="currentColor"/>
+    <rect x="635.11" y="10.29" width="80.77" height="70.55" transform="translate(16.3 199.96) rotate(-17.04)" fill="#da0260"/>
+    <path d="M70.55,432.83H0v254.53c0,38.12,30.9,69.02,69.02,69.02h116.93v-70.55h-115.39v-253Z" fill="currentColor"/>
+    <polygon points="757.87 503.44 836.7 503.44 836.7 756.61 907.25 756.61 907.25 503.44 991.76 503.44 991.76 432.89 757.87 432.89 757.87 503.44" fill="currentColor"/>
+    <polygon points="213.49 219.67 145.98 240.16 180.87 355.12 377.33 294.89 356.65 227.44 227.83 266.93 213.49 219.67" fill="#da0260"/>
+  </svg>
+  <div id="pl-pct">0%</div>
+  <div id="pl-bar-wrap"><div id="pl-bar"></div></div>
+</div>
 
 <!-- CURSOR -->
 
@@ -2856,6 +2913,50 @@ footer {
 
   document.addEventListener('mousedown', function(){ document.body.classList.add('cur-click'); });
   document.addEventListener('mouseup',   function(){ document.body.classList.remove('cur-click'); });
+})();
+</script>
+
+<script>
+(function(){
+  var pl  = document.getElementById('preloader');
+  var bar = document.getElementById('pl-bar');
+  var pct = document.getElementById('pl-pct');
+  var logo = document.getElementById('pl-logo');
+  if(!pl) return;
+
+  var progress = 0;
+
+  function setProgress(p){
+    progress = Math.min(p, 100);
+    bar.style.width = progress + '%';
+    pct.textContent = Math.round(progress) + '%';
+  }
+
+  /* show logo with a small delay */
+  setTimeout(function(){ logo.classList.add('show'); }, 80);
+
+  /* animate progress to 75% quickly, then wait for load */
+  var tick = setInterval(function(){
+    if(progress < 75) setProgress(progress + (Math.random() * 6 + 2));
+    else clearInterval(tick);
+  }, 80);
+
+  function finish(){
+    clearInterval(tick);
+    setProgress(100);
+    setTimeout(function(){
+      pl.classList.add('done');
+      setTimeout(function(){ pl.style.display = 'none'; }, 700);
+    }, 300);
+  }
+
+  if(document.readyState === 'complete'){
+    finish();
+  } else {
+    window.addEventListener('load', finish);
+    /* safety: always finish within 4s even if load never fires */
+    setTimeout(finish, 4000);
+  }
 })();
 </script>
 
