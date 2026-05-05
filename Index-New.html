@@ -2327,8 +2327,8 @@ footer {
     <!-- WHEEL -->
     <div style="position:relative;width:640px;height:640px;flex-shrink:0;">
       <!-- rotating rings -->
-      <div style="position:absolute;width:600px;height:600px;border-radius:50%;border:1px dashed rgba(255,255,255,.18);top:320px;left:320px;transform:translate(-50%,-50%);animation:wSpinCW 40s linear infinite;"></div>
-      <div style="position:absolute;width:560px;height:560px;border-radius:50%;border:1px dashed rgba(255,255,255,.14);top:320px;left:320px;transform:translate(-50%,-50%);animation:wSpinCCW 30s linear infinite;"></div>
+      <div style="position:absolute;width:600px;height:600px;border-radius:50%;border:1px dashed rgba(255,255,255,.45);top:320px;left:320px;transform:translate(-50%,-50%);animation:wSpinCW 40s linear infinite;"></div>
+      <div style="position:absolute;width:560px;height:560px;border-radius:50%;border:1px dashed rgba(255,255,255,.32);top:320px;left:320px;transform:translate(-50%,-50%);animation:wSpinCCW 30s linear infinite;"></div>
       <!-- lines -->
       <svg style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;" viewBox="0 0 640 640"><line x1="320" y1="320" x2="320" y2="50" stroke="rgba(255,255,255,.0)" stroke-width="1" class="wline" data-i="0" style="stroke-dasharray:300;stroke-dashoffset:300"/>
 <line x1="320" y1="320" x2="479" y2="102" stroke="rgba(255,255,255,.0)" stroke-width="1" class="wline" data-i="1" style="stroke-dasharray:300;stroke-dashoffset:300"/>
@@ -2496,11 +2496,11 @@ footer {
 
 <section class="section-pad" id="blog">
   <div class="wrap">
-    <div style="margin-bottom:56px">
+    <div style="margin-bottom:56px;text-align:center">
       <h2 class="sh-title r d1" style="color:var(--pink)">أحدث التقارير والإصدارات الملفتة</h2>
     </div>
 
-    <div class="blog-grid">
+    <div class="blog-grid" style="max-width:960px;margin-left:auto;margin-right:auto">
       <div class="blog-card r">
         <div class="blog-img"><div class="blog-img-inner" style="background:none"><img src="images/img-png-05.png" style="width:100%;height:100%;object-fit:cover;display:block;" alt="الرياض تحتفي بالتاريخ"></div><span class="blog-badge">جديد</span></div>
         <div class="blog-body"><span class="blog-tag">تقرير</span><div class="blog-title">الرياض تحتفي بالتاريخ</div></div>
@@ -3003,15 +3003,6 @@ footer {
     });
   });
 
-  /* ── Sectors section — items stagger from below ─ */
-  gsap.utils.toArray('#sectors .wnode').forEach(function(node, i){
-    gsap.from(node, {
-      y: 50, opacity: 0,
-      duration: 0.75, delay: i * 0.09,
-      ease: 'power3.out',
-      scrollTrigger: { trigger: '#sectors', start: 'top 75%', once: true }
-    });
-  });
 
 })();
 </script>
