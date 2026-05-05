@@ -950,10 +950,10 @@ body.js-ready .r.v { opacity: 1; transform: none; }
   border-radius: var(--r-lg); overflow: hidden;
   border: 1px solid var(--border);
   background: var(--bg2);
-  min-height: 640px;
+  min-height: 520px;
 }
 .svc-panel-inner {
-  position: relative; height: 640px;
+  position: relative; height: 520px;
 }
 /* per-state bg glow — very subtle */
 .sp-bg {
@@ -970,13 +970,14 @@ body.js-ready .r.v { opacity: 1; transform: none; }
 
 .sp-state {
   position: absolute; inset: 0;
-  padding: 140px 44px 44px;
+  padding: 105px 44px 32px;
   display: flex; flex-direction: column; justify-content: flex-start;
-  overflow-y: auto;
+  overflow-y: auto; scrollbar-width: none;
   opacity: 0; transform: translateY(12px);
   transition: opacity .45s cubic-bezier(.16,1,.3,1), transform .45s cubic-bezier(.16,1,.3,1);
   pointer-events: none;
 }
+.sp-state::-webkit-scrollbar { display: none; }
 .sp-state.on { opacity: 1; transform: translateY(0); pointer-events: auto; }
 
 .sp-icon-wrap {
@@ -993,7 +994,7 @@ body.js-ready .r.v { opacity: 1; transform: none; }
   font-size: 10px; color: var(--text-3); letter-spacing: 2px;
   font-family: var(--font-en); font-weight: 700;
 }
-.sp-name { font-size: 36px; font-weight: 900; letter-spacing: -1px; margin-bottom: 14px; }
+.sp-name { font-size: 28px; font-weight: 900; letter-spacing: -0.5px; margin-bottom: 10px; }
 .sp-desc { font-size: 14.5px; line-height: 1.8; color: var(--text-2); font-weight: 300; margin-bottom: 28px; }
 .sp-list {
   list-style: none;
