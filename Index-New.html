@@ -228,8 +228,8 @@ nav.scrolled {
     min-height: 460px;
   }
   .svc-panel-inner { height: 460px; }
-  .sp-state { padding: 110px 28px 32px !important; }
-  .sp-name { font-size: 26px !important; letter-spacing: -0.5px !important; }
+  .sp-state { padding: 100px 24px 28px !important; }
+  .sp-name { font-size: 22px !important; letter-spacing: -0.3px !important; }
   .sp-icon-wrap {
     top: 24px !important;
     right: 24px !important;
@@ -307,9 +307,9 @@ nav.scrolled {
   #services { padding: 64px 0; }
   #services .wrap { padding: 0 20px; }
   .svc-panel, .svc-panel-inner { min-height: 440px; height: 440px; }
-  .sp-state { padding: 100px 22px 28px !important; }
-  .sp-name { font-size: 22px !important; }
-  .sp-list li { font-size: 13px; padding-right: 16px; }
+  .sp-state { padding: 90px 18px 24px !important; }
+  .sp-name { font-size: 20px !important; }
+  .sp-list li { font-size: 12px; padding-right: 14px; }
   .svc-row { padding: 12px 12px; gap: 12px; }
 }
 
@@ -970,8 +970,9 @@ body.js-ready .r.v { opacity: 1; transform: none; }
 
 .sp-state {
   position: absolute; inset: 0;
-  padding: 140px 44px 44px;
+  padding: 120px 36px 32px;
   display: flex; flex-direction: column; justify-content: flex-start;
+  overflow: hidden;
   opacity: 0; transform: translateY(12px);
   transition: opacity .45s cubic-bezier(.16,1,.3,1), transform .45s cubic-bezier(.16,1,.3,1);
   pointer-events: none;
@@ -992,21 +993,21 @@ body.js-ready .r.v { opacity: 1; transform: none; }
   font-size: 10px; color: var(--text-3); letter-spacing: 2px;
   font-family: var(--font-en); font-weight: 700;
 }
-.sp-name { font-size: 36px; font-weight: 900; letter-spacing: -1px; margin-bottom: 14px; }
-.sp-desc { font-size: 14.5px; line-height: 1.8; color: var(--text-2); font-weight: 300; margin-bottom: 28px; }
+.sp-name { font-size: 26px; font-weight: 900; letter-spacing: -.5px; margin-bottom: 16px; line-height: 1.2; }
+.sp-desc { font-size: 13.5px; line-height: 1.7; color: var(--text-2); font-weight: 300; margin-bottom: 20px; }
 .sp-list {
   list-style: none;
   padding: 0;
-  margin: 0 0 28px;
+  margin: 0 0 16px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 7px;
 }
 .sp-list li {
   position: relative;
-  padding-right: 18px;
-  font-size: 14.5px;
-  line-height: 1.7;
+  padding-right: 16px;
+  font-size: 13px;
+  line-height: 1.55;
   color: var(--text-2);
   font-weight: 400;
 }
@@ -1125,11 +1126,7 @@ body.js-ready .r.v { opacity: 1; transform: none; }
 .svc-row-n { font-size: 11px; color: var(--text-3); letter-spacing: 1.5px; font-family: var(--font-en); font-weight: 700; margin-bottom: 3px; }
 .svc-row-nm { font-size: 16px; font-weight: 700; color: var(--text-2); transition: color .25s; }
 .svc-row.on .svc-row-nm {
-  background: linear-gradient(135deg, var(--pink), var(--purple));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  color: transparent;
+  color: var(--pink);
 }
 .svc-row-hint { font-size: 11.5px; color: var(--text-3); margin-top: 2px; }
 
@@ -1939,6 +1936,93 @@ footer {
 @keyframes wSpinCW{to{transform:translate(-50%,-50%) rotate(360deg)}}
 @keyframes wSpinCCW{to{transform:translate(-50%,-50%) rotate(-360deg)}}
 @keyframes wCenterPop{0%{opacity:0;transform:translate(-50%,-50%) scale(.5)}100%{opacity:1;transform:translate(-50%,-50%) scale(1)}}
+
+/* ═══════════════════════════════════════════════════════════
+   REFACTOR — UI enhancements
+═══════════════════════════════════════════════════════════ */
+
+/* section header accent line */
+.sh-tag { letter-spacing: 2px; }
+
+/* hero video parallax will be handled by GSAP */
+.hero-video { will-change: transform; }
+
+/* blog card lift */
+.blog-card {
+  transition: transform .45s cubic-bezier(.16,1,.3,1), box-shadow .45s, border-color .4s;
+}
+.blog-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 28px 64px rgba(0,0,0,.55), 0 0 0 1px rgba(218,2,96,.14);
+  border-color: rgba(218,2,96,.18);
+}
+.blog-img-inner { overflow: hidden; }
+.blog-img-inner img { transition: transform .55s cubic-bezier(.16,1,.3,1); }
+.blog-card:hover .blog-img-inner img { transform: scale(1.06); }
+
+/* logo card lift */
+.logo-card {
+  transition: transform .4s cubic-bezier(.16,1,.3,1), box-shadow .4s, border-color .4s;
+}
+.logo-card:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 16px 40px rgba(0,0,0,.45), 0 0 0 1px rgba(218,2,96,.12);
+  border-color: rgba(218,2,96,.2);
+}
+
+/* svc-panel glassmorphism */
+.svc-panel-inner { backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+
+/* divider enhanced glow */
+.divider::after { width: 56px; height: 5px; opacity: .55; filter: blur(0.5px); }
+
+/* button ripple */
+.btn-pink, .btn-white, .btn-outline-hero {
+  position: relative; overflow: hidden;
+}
+.btn-pink::before, .btn-white::before, .btn-outline-hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: rgba(255,255,255,.1);
+  opacity: 0;
+  transition: opacity .2s;
+  border-radius: inherit;
+}
+.btn-pink:hover::before, .btn-white:hover::before, .btn-outline-hero:hover::before { opacity: 1; }
+
+/* snum card subtle pink glow at bottom */
+.snum {
+  position: relative;
+}
+.snum::after {
+  content: '';
+  position: absolute; bottom: 0; left: 16px; right: 16px; height: 1px;
+  background: linear-gradient(to right, transparent, rgba(218,2,96,.4), transparent);
+  border-radius: 2px;
+}
+
+/* proj card hover image zoom */
+.proj-card { overflow: hidden; }
+.proj-card img { transition: transform .55s cubic-bezier(.16,1,.3,1); display: block; width: 100%; height: 100%; object-fit: cover; }
+.proj:hover .proj-card img { transform: scale(1.04); }
+
+/* contact blob extra glow */
+.contact-blob { filter: blur(80px); }
+
+/* wnode pulse ring */
+.wnode-dot::after {
+  content: '';
+  position: absolute; inset: -6px;
+  border-radius: 50%;
+  border: 1px solid currentColor;
+  opacity: 0;
+  transform: scale(0.6);
+  transition: opacity .4s, transform .4s;
+}
+.wnode:hover .wnode-dot::after { opacity: .35; transform: scale(1); }
+
+/* section-pad fade-in handled by GSAP */
+.section-pad > .wrap > *:first-child { will-change: transform, opacity; }
 </style>
 </head>
 <body>
@@ -2690,65 +2774,175 @@ footer {
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
 <script>
 (function(){
-  if(!window.gsap || !window.SplitText) return;
+  if(!window.gsap) return;
   gsap.registerPlugin(ScrollTrigger, SplitText);
 
-  var SELECTOR = [
-    'h1','h2','h3','h4',
-    '.hero-title','.hero-sub',
-    '.section-eyebrow','.section-title','.section-desc',
-    '.about-title','.about-desc','.about-lead',
-    '.svc-title','.svc-desc','.svc-row-nm','.sp-name',
-    '.blog-title','.blog-tag',
-    '.f-brand-name','.f-col-title','.f-link',
-    '.cta-title','.cta-sub',
-    '.wnode-label'
-  ].join(',');
+  /* ─────────────────────────────────────────────
+     1. HERO — dramatic entrance timeline
+  ───────────────────────────────────────────── */
+  var ht = gsap.timeline({ defaults: { ease: 'power3.out' }, delay: 0.2 });
 
-  document.querySelectorAll(SELECTOR).forEach(function(el){
-    if(el.dataset.splitDone) return;
-    el.dataset.splitDone = '1';
+  // background video zooms out on load
+  ht.from('.hero-video', { scale: 1.12, duration: 2.2, ease: 'power2.out' }, 0);
+  ht.from('.hero-pill',  { opacity: 0, y: -24, duration: 0.6, ease: 'back.out(1.7)' }, 0.35);
+
+  // title words cascade in
+  var htEl = document.querySelector('.hero-title');
+  if(htEl) {
     try {
-      var split = new SplitText(el, { type: 'words', wordsClass: 'st-word' });
-      gsap.from(split.words, {
-        opacity: 0,
-        y: 28,
-        rotateX: -30,
-        stagger: 0.07,
-        duration: 0.75,
-        ease: 'power3.out',
-        scrollTrigger: { trigger: el, start: 'top 88%', once: true }
-      });
-    } catch(e){}
-  });
-})();
-</script>
-
-<script>
-(function(){
-  if(!window.gsap || !window.ScrollTrigger) return;
-
-  /* ── Work cards: presentation-mode scroll (bottom → top stagger) ── */
-  var cards = document.querySelectorAll('#work .proj');
-  if(!cards.length) return;
-
-  /* set initial state */
-  gsap.set(cards, { opacity: 0, y: 120, scale: 0.94 });
-
-  ScrollTrigger.create({
-    trigger: '#work .proj-list',
-    start: 'top 80%',
-    once: true,
-    onEnter: function(){
-      gsap.to(cards, {
-        opacity: 1,
-        y: 0,
-        scale: 1,
-        duration: 0.85,
-        ease: 'power3.out',
-        stagger: { each: 0.14, from: 'start' }
-      });
+      var htSplit = new SplitText(htEl, { type: 'words' });
+      ht.from(htSplit.words, { opacity: 0, y: 70, rotateX: -50, stagger: 0.09, duration: 1, ease: 'power4.out' }, 0.45);
+    } catch(e) {
+      ht.from(htEl, { opacity: 0, y: 60, duration: 0.9 }, 0.45);
     }
+  }
+
+  ht.from('.hero-sub',     { opacity: 0, y: 32, duration: 0.8 }, 0.95);
+  ht.from('.hero-btns > *',{ opacity: 0, y: 20, scale: 0.9, stagger: 0.12, duration: 0.6, ease: 'back.out(1.4)' }, 1.1);
+  ht.from('.scroll-cue',   { opacity: 0, duration: 0.6 }, 1.4);
+
+  /* ─────────────────────────────────────────────
+     2. Hero video — slow parallax on scroll
+  ───────────────────────────────────────────── */
+  gsap.to('.hero-video', {
+    yPercent: 22, ease: 'none',
+    scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: 1.2 }
+  });
+
+  /* ─────────────────────────────────────────────
+     3. Section headers — word-reveal on scroll
+  ───────────────────────────────────────────── */
+  document.querySelectorAll('.sh-title, .sh-sub, .sh-tag').forEach(function(el) {
+    if(el.dataset.gsapDone) return;
+    el.dataset.gsapDone = '1';
+    if(el.classList.contains('sh-title')) {
+      try {
+        var s = new SplitText(el, { type: 'words' });
+        gsap.from(s.words, {
+          opacity: 0, y: 36, rotateX: -30, stagger: 0.07, duration: 0.8, ease: 'power3.out',
+          scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+        });
+        return;
+      } catch(e) {}
+    }
+    gsap.from(el, {
+      opacity: 0, y: 24, duration: 0.75, ease: 'power3.out',
+      scrollTrigger: { trigger: el, start: 'top 89%', once: true }
+    });
+  });
+
+  /* ─────────────────────────────────────────────
+     4. About — stat counter + card reveal
+  ───────────────────────────────────────────── */
+  gsap.from('.about-split > *', {
+    opacity: 0, y: 50, stagger: 0.18, duration: 0.9, ease: 'power3.out',
+    scrollTrigger: { trigger: '#about', start: 'top 78%', once: true }
+  });
+
+  document.querySelectorAll('.snum-val').forEach(function(el) {
+    var raw    = el.textContent.trim();
+    var target = parseFloat(raw.replace(/[^\d.]/g, '')) || 0;
+    var pre    = el.querySelector('.snum-prefix');
+    var suf    = el.querySelector('.snum-suffix');
+    var preT   = pre ? pre.outerHTML : '';
+    var sufT   = suf ? suf.outerHTML : '';
+
+    ScrollTrigger.create({
+      trigger: el, start: 'top 88%', once: true,
+      onEnter: function() {
+        var obj = { v: 0 };
+        gsap.to(obj, {
+          v: target, duration: 2, ease: 'power2.out',
+          onUpdate: function() {
+            el.innerHTML = preT + Math.round(obj.v) + sufT;
+          }
+        });
+      }
+    });
+  });
+
+  /* ─────────────────────────────────────────────
+     5. Services — panel slides from right, rows from left
+  ───────────────────────────────────────────── */
+  gsap.from('.svc-panel', {
+    opacity: 0, x: 60, duration: 1, ease: 'power3.out',
+    scrollTrigger: { trigger: '#services', start: 'top 75%', once: true }
+  });
+  gsap.from('.svc-row', {
+    opacity: 0, x: -50, stagger: 0.09, duration: 0.75, ease: 'power3.out', delay: 0.15,
+    scrollTrigger: { trigger: '#services .svc-list', start: 'top 80%', once: true }
+  });
+
+  /* ─────────────────────────────────────────────
+     6. Work cards — staggered slide up
+  ───────────────────────────────────────────── */
+  gsap.from('#work .proj', {
+    opacity: 0, y: 80, scale: 0.95, stagger: 0.16, duration: 0.95, ease: 'power3.out',
+    scrollTrigger: { trigger: '#work .proj-list', start: 'top 80%', once: true }
+  });
+
+  /* ─────────────────────────────────────────────
+     7. Clients logos — random stagger
+  ───────────────────────────────────────────── */
+  gsap.from('.logo-card', {
+    opacity: 0, scale: 0.8, y: 28,
+    stagger: { amount: 0.9, from: 'random' },
+    duration: 0.7, ease: 'back.out(1.5)',
+    scrollTrigger: { trigger: '#clients', start: 'top 80%', once: true }
+  });
+
+  /* ─────────────────────────────────────────────
+     8. Blog cards — fan in from left
+  ───────────────────────────────────────────── */
+  gsap.from('#blog .blog-card', {
+    opacity: 0, y: 56, stagger: 0.16, duration: 0.85, ease: 'power3.out',
+    scrollTrigger: { trigger: '#blog .blog-grid', start: 'top 82%', once: true }
+  });
+
+  /* ─────────────────────────────────────────────
+     9. Contact CTA — scale up
+  ───────────────────────────────────────────── */
+  gsap.from('#contact .contact-header > *', {
+    opacity: 0, y: 44, stagger: 0.14, duration: 0.9, ease: 'power3.out',
+    scrollTrigger: { trigger: '#contact', start: 'top 78%', once: true }
+  });
+  gsap.from('#contact .contact-cta', {
+    opacity: 0, scale: 0.88, duration: 0.7, ease: 'back.out(1.4)', delay: 0.35,
+    scrollTrigger: { trigger: '#contact', start: 'top 78%', once: true }
+  });
+
+  /* ─────────────────────────────────────────────
+     10. Dividers — expand from center
+  ───────────────────────────────────────────── */
+  gsap.utils.toArray('.divider').forEach(function(d) {
+    gsap.from(d, {
+      scaleX: 0, transformOrigin: 'center', duration: 1.1, ease: 'power3.out',
+      scrollTrigger: { trigger: d, start: 'top 92%', once: true }
+    });
+  });
+
+  /* ─────────────────────────────────────────────
+     11. Sectors wnodes — pop in staggered
+  ───────────────────────────────────────────── */
+  gsap.from('.wnode', {
+    opacity: 0, scale: 0, duration: 0.55, ease: 'back.out(1.7)',
+    stagger: { amount: 0.7, from: 'center' },
+    scrollTrigger: { trigger: '#sectors', start: 'top 75%', once: true }
+  });
+
+  /* ─────────────────────────────────────────────
+     12. Magnetic hover on primary buttons
+  ───────────────────────────────────────────── */
+  document.querySelectorAll('.btn-pink, .nav-cta').forEach(function(btn) {
+    btn.addEventListener('mousemove', function(e) {
+      var r = btn.getBoundingClientRect();
+      var mx = e.clientX - r.left - r.width  / 2;
+      var my = e.clientY - r.top  - r.height / 2;
+      gsap.to(btn, { x: mx * 0.22, y: my * 0.22, duration: 0.4, ease: 'power2.out' });
+    });
+    btn.addEventListener('mouseleave', function() {
+      gsap.to(btn, { x: 0, y: 0, duration: 0.65, ease: 'elastic.out(1, 0.45)' });
+    });
   });
 
 })();
@@ -2779,6 +2973,36 @@ footer {
 
   document.addEventListener('mousedown', function(){ document.body.classList.add('cur-click'); });
   document.addEventListener('mouseup',   function(){ document.body.classList.remove('cur-click'); });
+})();
+</script>
+
+<!-- Interruptible nav timelines -->
+<script>
+(function(){
+  if(!window.gsap) return;
+  document.querySelectorAll('.nav-links a').forEach(function(link){
+    var line = link.querySelector('.nav-line');
+    var tl = gsap.timeline({ paused: true })
+      .to(link, { color: '#da0260', duration: 0.25, ease: 'power2.out' }, 0)
+      .to(link, { y: -2, duration: 0.2, ease: 'power2.out' }, 0)
+      .to(line, { scaleX: 1, duration: 0.3, ease: 'power2.out', transformOrigin: 'right center' }, 0);
+    link.addEventListener('mouseenter', function(){ tl.play(); });
+    link.addEventListener('mouseleave', function(){ tl.reverse(); });
+  });
+  var cta = document.querySelector('.nav-cta');
+  if(cta){
+    var ctaTl = gsap.timeline({ paused: true })
+      .to(cta, { background: '#da0260', borderColor: '#da0260', boxShadow: '0 4px 20px rgba(218,2,96,.5)', duration: 0.3, ease: 'power2.out' });
+    cta.addEventListener('mouseenter', function(){ ctaTl.play(); });
+    cta.addEventListener('mouseleave', function(){ ctaTl.reverse(); });
+  }
+  var logo = document.querySelector('.nav-logo');
+  if(logo){
+    var logoTl = gsap.timeline({ paused: true })
+      .to(logo, { scale: 1.07, opacity: 1, duration: 0.3, ease: 'power2.out' });
+    logo.addEventListener('mouseenter', function(){ logoTl.play(); });
+    logo.addEventListener('mouseleave', function(){ logoTl.reverse(); });
+  }
 })();
 </script>
 
