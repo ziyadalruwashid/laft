@@ -2752,6 +2752,85 @@ footer {
 })();
 </script>
 
+<script>
+(function(){
+  if(!window.gsap || !window.ScrollTrigger) return;
+
+  /* ── Hero: buttons + scroll cue entrance ───────── */
+  gsap.from('.hero-btns', {
+    y: 40, opacity: 0, duration: 1.1, delay: 1.0, ease: 'power3.out'
+  });
+  gsap.from('.scroll-cue', {
+    y: 20, opacity: 0, duration: 0.9, delay: 2.2, ease: 'power2.out'
+  });
+
+  /* ── Hero video parallax on scroll ─────────────── */
+  gsap.to('.hero-video-wrap', {
+    yPercent: 18, ease: 'none',
+    scrollTrigger: {
+      trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 1.5
+    }
+  });
+
+  /* ── Stats count-up ─────────────────────────────── */
+  document.querySelectorAll('.snum-val').forEach(function(el){
+    var target = parseInt(el.dataset.target, 10) || 0;
+    var numNode = null;
+    el.childNodes.forEach(function(n){
+      if(n.nodeType === 3 && n.textContent.trim()) numNode = n;
+    });
+    if(!numNode) return;
+    var proxy = { val: 0 };
+    gsap.to(proxy, {
+      val: target, duration: 2.4, ease: 'power2.out',
+      scrollTrigger: { trigger: el, start: 'top 85%', once: true },
+      onUpdate: function(){ numNode.textContent = Math.round(proxy.val); }
+    });
+  });
+
+  /* ── Section dividers — scaleX reveal ──────────── */
+  gsap.utils.toArray('.divider').forEach(function(el){
+    gsap.from(el, {
+      scaleX: 0, transformOrigin: 'center',
+      duration: 1.4, ease: 'expo.out',
+      scrollTrigger: { trigger: el, start: 'top 95%', once: true }
+    });
+  });
+
+  /* ── Blog cards — slide in from right (X only, opacity handled by .r) ── */
+  var blogCards = gsap.utils.toArray('.blog-card');
+  if(blogCards.length){
+    gsap.from(blogCards, {
+      x: 80, duration: 0.9, ease: 'power3.out', stagger: 0.13,
+      scrollTrigger: { trigger: '#blog', start: 'top 78%', once: true }
+    });
+  }
+
+  /* ── Work section heading accent line ──────────── */
+  var workTag = document.querySelector('#work .sh-tag');
+  if(workTag){
+    gsap.from(workTag, {
+      scaleX: 0, transformOrigin: 'right center',
+      duration: 0.8, ease: 'power3.out',
+      scrollTrigger: { trigger: workTag, start: 'top 85%', once: true }
+    });
+  }
+
+  /* ── Contact: CTA button pulse after appear ─────── */
+  ScrollTrigger.create({
+    trigger: '#contact',
+    start: 'top 60%',
+    once: true,
+    onEnter: function(){
+      gsap.from('#contact .btn-pink', {
+        scale: 0.88, opacity: 0, duration: 0.9, ease: 'back.out(1.6)', delay: 0.6
+      });
+    }
+  });
+
+})();
+</script>
+
 <!-- Custom cursor elements -->
 <div id="cur-arrow">
   <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
