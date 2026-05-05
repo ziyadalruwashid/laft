@@ -2865,15 +2865,6 @@ footer {
     });
   });
 
-  /* ── Blog cards — slide in from right (X only, opacity handled by .r) ── */
-  var blogCards = gsap.utils.toArray('.blog-card');
-  if(blogCards.length){
-    gsap.from(blogCards, {
-      x: 80, duration: 0.9, ease: 'power3.out', stagger: 0.13,
-      scrollTrigger: { trigger: '#blog', start: 'top 78%', once: true }
-    });
-  }
-
   /* ── Work section heading accent line ──────────── */
   var workTag = document.querySelector('#work .sh-tag');
   if(workTag){
@@ -2982,16 +2973,6 @@ footer {
       gsap.to(spot, { left: e.clientX - r.left, top: e.clientY - r.top, duration: 0.35, ease: 'power2.out' });
     });
   }
-
-  /* ── Blog card images — blur-in reveal ───────── */
-  gsap.utils.toArray('.blog-img-inner').forEach(function(img, i){
-    gsap.from(img, {
-      filter: 'blur(14px)', scale: 1.04,
-      duration: 1.1, delay: i * 0.13,
-      ease: 'power3.out',
-      scrollTrigger: { trigger: img, start: 'top 88%', once: true }
-    });
-  });
 
   /* ── Stat numbers pop on complete ───────────── */
   document.querySelectorAll('.snum').forEach(function(snum, i){
