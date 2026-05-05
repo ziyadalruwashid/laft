@@ -1939,6 +1939,121 @@ footer {
 @keyframes wSpinCW{to{transform:translate(-50%,-50%) rotate(360deg)}}
 @keyframes wSpinCCW{to{transform:translate(-50%,-50%) rotate(-360deg)}}
 @keyframes wCenterPop{0%{opacity:0;transform:translate(-50%,-50%) scale(.5)}100%{opacity:1;transform:translate(-50%,-50%) scale(1)}}
+
+/* ═══════════════════════════════════════════════════════════
+   POLISH PASS — visual consistency + tasteful refinements
+   (no header/footer/bg/brand color changes)
+═══════════════════════════════════════════════════════════ */
+
+/* ── Section header tag — soft pill with pink accent dot ── */
+.sh-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.sh-tag::before {
+  content: '';
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--pink);
+  box-shadow: 0 0 8px rgba(218,2,96,.6);
+}
+
+/* ── Cards — unified hover (lift + soft pink edge) ── */
+.blog-card,
+.logo-card,
+.proj-card {
+  transition:
+    transform .45s cubic-bezier(.16,1,.3,1),
+    box-shadow .45s,
+    border-color .35s;
+}
+.blog-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 22px 50px rgba(0,0,0,.45), 0 0 0 1px rgba(218,2,96,.12);
+  border-color: rgba(218,2,96,.18);
+}
+.logo-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 36px rgba(0,0,0,.4), 0 0 0 1px rgba(218,2,96,.10);
+  border-color: rgba(218,2,96,.16);
+}
+
+/* ── Image zoom on card hover (subtle) ── */
+.blog-img-inner { overflow: hidden; }
+.blog-img-inner img,
+.blog-img-inner > div { transition: transform .55s cubic-bezier(.16,1,.3,1); }
+.blog-card:hover .blog-img-inner img,
+.blog-card:hover .blog-img-inner > div { transform: scale(1.05); }
+
+/* ── Blog tag — refined pill ── */
+.blog-tag {
+  display: inline-block;
+  padding: 4px 11px;
+  background: rgba(218,2,96,.08);
+  border: 1px solid rgba(218,2,96,.18);
+  border-radius: 100px;
+  transition: background .3s, border-color .3s;
+}
+.blog-card:hover .blog-tag {
+  background: rgba(218,2,96,.18);
+  border-color: rgba(218,2,96,.4);
+}
+
+/* ── Stat cards — gentle frame + lift ── */
+.snum {
+  border-radius: 14px;
+  padding: 22px 18px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,.012);
+  transition: transform .35s cubic-bezier(.16,1,.3,1), border-color .35s, background .35s;
+}
+.snum:hover {
+  transform: translateY(-3px);
+  border-color: rgba(218,2,96,.22);
+  background: rgba(218,2,96,.02);
+}
+
+/* ── Buttons — softer hover lift on primary CTAs ── */
+.btn-pink {
+  transition:
+    background .25s,
+    box-shadow .35s,
+    transform .25s cubic-bezier(.16,1,.3,1);
+}
+.btn-pink:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(218,2,96,.4);
+}
+
+/* ── Service rows — left pink accent slides in ── */
+.svc-row {
+  position: relative;
+  overflow: hidden;
+}
+.svc-row::before {
+  content: '';
+  position: absolute;
+  top: 14%; bottom: 14%; right: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--pink), var(--purple));
+  border-radius: 2px;
+  transform: scaleY(0);
+  transform-origin: center;
+  transition: transform .35s cubic-bezier(.16,1,.3,1);
+}
+.svc-row.on::before,
+.svc-row:hover::before { transform: scaleY(1); }
+
+/* ── Smooth scroll behavior ── */
+html { scroll-behavior: smooth; }
+
+/* ── Selection (pink highlight) ── */
+::selection      { background: rgba(218,2,96,.32); color: #fff; }
+::-moz-selection { background: rgba(218,2,96,.32); color: #fff; }
+
+/* ── Reveal helpers ── */
+.reveal-up    { opacity: 0; transform: translateY(28px); will-change: opacity, transform; }
+.reveal-in    { opacity: 1; transform: none; transition: opacity .8s cubic-bezier(.16,1,.3,1), transform .8s cubic-bezier(.16,1,.3,1); }
 </style>
 </head>
 <body>
@@ -2779,6 +2894,119 @@ footer {
 
   document.addEventListener('mousedown', function(){ document.body.classList.add('cur-click'); });
   document.addEventListener('mouseup',   function(){ document.body.classList.remove('cur-click'); });
+})();
+</script>
+
+<!-- ═══════════════════════════════════════════════════════════
+     POLISH PASS — refined GSAP animations (light, professional)
+═══════════════════════════════════════════════════════════ -->
+<script>
+(function(){
+  if(!window.gsap) return;
+  gsap.registerPlugin(ScrollTrigger, SplitText);
+
+  /* default settings */
+  ScrollTrigger.defaults({ toggleActions: 'play none none none' });
+
+  /* ── Hero entrance — clean cascade ── */
+  var ht = gsap.timeline({ defaults: { ease: 'power3.out' }, delay: 0.15 });
+  var heroTitle = document.querySelector('.hero-title');
+  if(heroTitle) {
+    try {
+      var s = new SplitText(heroTitle, { type: 'words' });
+      ht.from(s.words, { opacity: 0, y: 40, stagger: 0.07, duration: 0.75 }, 0);
+    } catch(e) {
+      ht.from(heroTitle, { opacity: 0, y: 30, duration: 0.7 }, 0);
+    }
+  }
+  ht.from('.hero-pill',     { opacity: 0, y: -16, duration: 0.5 }, 0);
+  ht.from('.hero-sub',      { opacity: 0, y: 22, duration: 0.6 }, 0.4);
+  ht.from('.hero-btns > *', { opacity: 0, y: 16, stagger: 0.08, duration: 0.5 }, 0.6);
+  ht.from('.scroll-cue',    { opacity: 0, duration: 0.5 }, 0.85);
+
+  /* ── Section titles — gentle word reveal ── */
+  document.querySelectorAll('.sh-title').forEach(function(el) {
+    try {
+      var sp = new SplitText(el, { type: 'words' });
+      gsap.from(sp.words, {
+        opacity: 0, y: 24, stagger: 0.05, duration: 0.6, ease: 'power3.out',
+        scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+      });
+    } catch(e) {
+      gsap.from(el, {
+        opacity: 0, y: 24, duration: 0.6, ease: 'power3.out',
+        scrollTrigger: { trigger: el, start: 'top 88%', once: true }
+      });
+    }
+  });
+
+  /* ── Section subtitles & tags — fade up ── */
+  document.querySelectorAll('.sh-tag, .sh-sub').forEach(function(el) {
+    gsap.from(el, {
+      opacity: 0, y: 18, duration: 0.55, ease: 'power3.out',
+      scrollTrigger: { trigger: el, start: 'top 90%', once: true }
+    });
+  });
+
+  /* ── Stat cards — staggered fade-up ── */
+  gsap.from('.snum', {
+    opacity: 0, y: 28, stagger: 0.1, duration: 0.7, ease: 'power3.out',
+    scrollTrigger: { trigger: '.stats-2x2', start: 'top 82%', once: true }
+  });
+
+  /* ── Service rows — slide from right (RTL natural) ── */
+  gsap.from('.svc-row', {
+    opacity: 0, x: -32, stagger: 0.08, duration: 0.6, ease: 'power3.out',
+    scrollTrigger: { trigger: '#services .svc-list', start: 'top 80%', once: true }
+  });
+
+  /* ── Service panel — fade in ── */
+  gsap.from('.svc-panel', {
+    opacity: 0, x: 32, duration: 0.85, ease: 'power3.out',
+    scrollTrigger: { trigger: '#services', start: 'top 78%', once: true }
+  });
+
+  /* ── Project cards — clean stagger ── */
+  gsap.from('#work .proj', {
+    opacity: 0, y: 50, stagger: 0.12, duration: 0.7, ease: 'power3.out',
+    scrollTrigger: { trigger: '#work .proj-list', start: 'top 82%', once: true }
+  });
+
+  /* ── Logo cards — random fade ── */
+  gsap.from('.logo-card', {
+    opacity: 0, y: 20, scale: 0.95,
+    stagger: { amount: 0.6, from: 'random' },
+    duration: 0.55, ease: 'power3.out',
+    scrollTrigger: { trigger: '#clients', start: 'top 82%', once: true }
+  });
+
+  /* ── Blog cards — gentle stagger ── */
+  gsap.from('#blog .blog-card', {
+    opacity: 0, y: 36, stagger: 0.12, duration: 0.7, ease: 'power3.out',
+    scrollTrigger: { trigger: '#blog .blog-grid', start: 'top 82%', once: true }
+  });
+
+  /* ── Contact CTA — soft fade ── */
+  gsap.from('#contact .contact-header > *, #contact .contact-cta', {
+    opacity: 0, y: 28, stagger: 0.1, duration: 0.7, ease: 'power3.out',
+    scrollTrigger: { trigger: '#contact', start: 'top 78%', once: true }
+  });
+
+  /* ── Dividers — subtle expand from center ── */
+  document.querySelectorAll('.divider').forEach(function(d) {
+    gsap.from(d, {
+      scaleX: 0, transformOrigin: 'center', duration: 0.9, ease: 'power3.out',
+      scrollTrigger: { trigger: d, start: 'top 92%', once: true }
+    });
+  });
+
+  /* ── Wnodes — pop in from center ── */
+  gsap.from('.wnode', {
+    opacity: 0, scale: 0.4, duration: 0.5, ease: 'back.out(1.5)',
+    stagger: { amount: 0.6, from: 'center' },
+    scrollTrigger: { trigger: '#sectors', start: 'top 78%', once: true }
+  });
+
 })();
 </script>
 
