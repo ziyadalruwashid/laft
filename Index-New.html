@@ -1938,6 +1938,22 @@ footer {
 @keyframes wSpinCCW{to{transform:translate(-50%,-50%) rotate(-360deg)}}
 @keyframes wCenterPop{0%{opacity:0;transform:translate(-50%,-50%) scale(.5)}100%{opacity:1;transform:translate(-50%,-50%) scale(1)}}
 
+/* ── SCROLL PROGRESS BAR ───────────────────────── */
+#scroll-prog {
+  position: fixed; top: 0; left: 0; height: 2px; width: 0%;
+  background: linear-gradient(90deg, #da0260, #003fa3);
+  box-shadow: 0 0 10px rgba(218,2,96,.55);
+  z-index: 9998; pointer-events: none;
+  transition: width .05s linear;
+}
+
+/* ── HERO FLOATING ORBS ─────────────────────────── */
+.hero-orb {
+  position: absolute; border-radius: 50%;
+  pointer-events: none; filter: blur(60px);
+  will-change: transform;
+}
+
 /* ── PRELOADER ──────────────────────────────────── */
 #preloader {
   position: fixed; inset: 0; z-index: 9999;
@@ -1983,6 +1999,7 @@ footer {
 <body>
 
 <!-- PRELOADER -->
+<div id="scroll-prog"></div>
 <div id="preloader">
   <svg id="pl-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 992.03 756.61">
     <path d="M70.55,186.66l377.25-.06v97.82h70.55v-97.82c0-38.93-31.56-70.49-70.49-70.49H69.02C30.9,116.11,0,147.01,0,185.13v170.41h70.55v-168.88Z" fill="currentColor"/>
@@ -2877,6 +2894,123 @@ footer {
         scale: 0.88, opacity: 0, duration: 0.9, ease: 'back.out(1.6)', delay: 0.6
       });
     }
+  });
+
+})();
+</script>
+
+<script>
+(function(){
+  /* ── Scroll progress bar ─────────────────────── */
+  var prog = document.getElementById('scroll-prog');
+  if(prog){
+    window.addEventListener('scroll', function(){
+      var pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100;
+      prog.style.width = pct + '%';
+    }, { passive: true });
+  }
+
+  if(!window.gsap) return;
+  gsap.registerPlugin(ScrollTrigger);
+
+  /* ── Hero floating orbs ──────────────────────── */
+  var hero = document.querySelector('.hero');
+  if(hero){
+    var orbData = [
+      { w:320, h:320, bg:'rgba(218,2,96,.07)',  l:'15%', t:'20%', dur:14 },
+      { w:240, h:240, bg:'rgba(0,63,163,.06)',  l:'65%', t:'55%', dur:11 },
+      { w:180, h:180, bg:'rgba(218,2,96,.05)',  l:'45%', t:'70%', dur:17 },
+      { w:140, h:140, bg:'rgba(0,63,163,.05)',  l:'80%', t:'15%', dur:9  },
+    ];
+    orbData.forEach(function(d){
+      var orb = document.createElement('div');
+      orb.className = 'hero-orb';
+      orb.style.cssText = 'width:'+d.w+'px;height:'+d.h+'px;background:'+d.bg+';left:'+d.l+';top:'+d.t+';';
+      hero.appendChild(orb);
+      gsap.to(orb, {
+        x: (Math.random()-.5)*120, y: (Math.random()-.5)*100,
+        duration: d.dur, repeat: -1, yoyo: true,
+        ease: 'sine.inOut', delay: Math.random()*4
+      });
+    });
+  }
+
+  /* ── Magnetic buttons ────────────────────────── */
+  gsap.utils.toArray('.btn-pink:not(.r), .btn-outline-hero').forEach(function(btn){
+    btn.addEventListener('mousemove', function(e){
+      var r = btn.getBoundingClientRect();
+      gsap.to(btn, {
+        x: (e.clientX - r.left - r.width  / 2) * 0.32,
+        y: (e.clientY - r.top  - r.height / 2) * 0.32,
+        duration: 0.35, ease: 'power2.out'
+      });
+    });
+    btn.addEventListener('mouseleave', function(){
+      gsap.to(btn, { x: 0, y: 0, duration: 0.8, ease: 'elastic.out(1, 0.45)' });
+    });
+  });
+
+  /* ── Project cards 3D tilt ───────────────────── */
+  gsap.utils.toArray('#work .proj').forEach(function(card){
+    card.style.transformStyle = 'preserve-3d';
+    card.style.willChange = 'transform';
+    card.addEventListener('mousemove', function(e){
+      var r = card.getBoundingClientRect();
+      var x = (e.clientX - r.left) / r.width  - 0.5;
+      var y = (e.clientY - r.top)  / r.height - 0.5;
+      gsap.to(card, {
+        rotateY: x * 9, rotateX: -y * 5,
+        transformPerspective: 900,
+        duration: 0.45, ease: 'power2.out'
+      });
+    });
+    card.addEventListener('mouseleave', function(){
+      gsap.to(card, { rotateY: 0, rotateX: 0, duration: 0.9, ease: 'elastic.out(1, 0.4)' });
+    });
+  });
+
+  /* ── Services panel mouse-follow spotlight ───── */
+  var panel = document.querySelector('.svc-panel');
+  if(panel){
+    var spot = document.createElement('div');
+    spot.style.cssText = 'position:absolute;pointer-events:none;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(218,2,96,.1) 0%,transparent 70%);transform:translate(-50%,-50%);opacity:0;transition:opacity .4s;z-index:0;will-change:transform;';
+    panel.appendChild(spot);
+    panel.addEventListener('mouseenter', function(){ spot.style.opacity = '1'; });
+    panel.addEventListener('mouseleave', function(){ spot.style.opacity = '0'; });
+    panel.addEventListener('mousemove', function(e){
+      var r = panel.getBoundingClientRect();
+      gsap.to(spot, { left: e.clientX - r.left, top: e.clientY - r.top, duration: 0.35, ease: 'power2.out' });
+    });
+  }
+
+  /* ── Blog card images — blur-in reveal ───────── */
+  gsap.utils.toArray('.blog-img-inner').forEach(function(img, i){
+    gsap.from(img, {
+      filter: 'blur(14px)', scale: 1.04,
+      duration: 1.1, delay: i * 0.13,
+      ease: 'power3.out',
+      scrollTrigger: { trigger: img, start: 'top 88%', once: true }
+    });
+  });
+
+  /* ── Stat numbers pop on complete ───────────── */
+  document.querySelectorAll('.snum').forEach(function(snum, i){
+    gsap.from(snum, {
+      scale: 0.75, opacity: 0,
+      duration: 0.7, delay: i * 0.12,
+      ease: 'back.out(1.8)',
+      scrollTrigger: { trigger: snum, start: 'top 85%', once: true }
+    });
+  });
+
+  /* ── Sectors section — items stagger from below ─ */
+  gsap.utils.toArray('#sectors .wnode').forEach(function(node, i){
+    gsap.from(node, {
+      y: 50, opacity: 0,
+      duration: 0.75, delay: i * 0.09,
+      ease: 'power3.out',
+      scrollTrigger: { trigger: '#sectors', start: 'top 75%', once: true }
+    });
   });
 
 })();
